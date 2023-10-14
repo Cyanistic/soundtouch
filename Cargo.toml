@@ -1,0 +1,22 @@
+[package]
+authors = ["Cyanism <github@cyan.slmail.me>"]
+categories = ["external-ffi-bindings", "multimedia::audio", "multimedia::audio::sound-processing"]
+description = "A thin wrapper around the SoundTouch C++ audio libaray"
+edition = "2021"
+licsense = "LGPL-2.1"
+keywords = ["soundtouch", "audio", "dsp", "pitch", "tempo", "rate", "stretch", "time", "shift", "timestretch", "timescale", "music", "processing", "sound", "touch", "audio-processing", "audio-library"]
+name = "soundtouch-rs"
+readme = "README.md"
+repository = "https://github.com/Cyanistic/soundtouch-rs"
+version = "0.1.0"
+
+[dependencies.libc]
+version = "0.2"
+default-features = false
+
+[target.'cfg(unix)'.build-dependencies.autotools]
+version = "0.2.6"
+
+
+[target.'cfg(windows)'.build-dependencies.cc]
+version = "1.0.77"
