@@ -1,5 +1,5 @@
 #[test]
 fn test() {
-    use soundtouch_rs::SoundTouch;
+    use soundtouch::SoundTouch;
     let mut soundtouch = SoundTouch::new();
 }

@@ -53,7 +53,7 @@ impl BPMDetect {
     pub fn input_samples(&mut self, samples: &[f32]) {
         unsafe {
             self.0
-                .inputSamples(samples.as_ptr(), samples.len() as c_int);
+                .inputSamples(samples.as_ptr(), samples.len() as c_int)
         }
     }
 

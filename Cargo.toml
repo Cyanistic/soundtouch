@@ -5,9 +5,9 @@ description = "A utility wrapper around the SoundTouch C++ audio library"
 edition = "2021"
 license = "LGPL-2.1"
 keywords = ["soundtouch", "audio", "music", "audio-processing", "audio-library"]
-name = "soundtouch-rs"
+name = "soundtouch"
 readme = "README.md"
-repository = "https://github.com/Cyanistic/soundtouch-rs"
+repository = "https://github.com/Cyanistic/soundtouch"
 version = "0.1.0"
 
 [dependencies.soundtouch-ffi]

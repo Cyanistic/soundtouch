@@ -1,9 +1,9 @@
-//!A safe utility wrapper around the SoundTouch C++ audio library.
+//!A safe utility wrapper around the SoundTouch C++ audio library. The API is very similar to the original C++ API.
 //!
 //!Most of the documentation is copied from the [SoundTouch repository](https://codeberg.org/soundtouch/soundtouch).
 //!## High Level Example
 //!```rust
-//!use soundtouch_rs::{SoundTouch, Setting};
+//!use soundtouch::{SoundTouch, Setting};
 //!
 //!let mut soundtouch = SoundTouch::new();
 //!soundtouch
@@ -22,7 +22,7 @@
 //!```
 //!## Low Level Example
 //!```rust
-//!use soundtouch_rs::{SoundTouch, Setting};
+//!use soundtouch::{SoundTouch, Setting};
 //!
 //!let mut soundtouch = SoundTouch::new();
 //!soundtouch
