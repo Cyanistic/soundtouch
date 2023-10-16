@@ -1,9 +1,13 @@
-use ffi::{
-    uint, SoundTouch as SoundTouchSys, SoundTouch_putSamples as putSamples,
-    SoundTouch_receiveSamples as receiveSamples,
-};
+use ffi::{uint, SoundTouch as SoundTouchSys};
 use soundtouch_ffi as ffi;
-use std::ffi::{c_int, c_void};
+use core::ffi::{c_int, c_void};
+
+#[cfg(feature = "alloc")]
+use ffi::{SoundTouch_putSamples as putSamples, SoundTouch_receiveSamples as receiveSamples};
+#[cfg(feature = "alloc")]
+extern crate alloc;
+#[cfg(feature = "alloc")]
+use alloc::vec::Vec;
 
 /// A list of settings that can be enabled or disabled.
 #[derive(Debug, Clone, Copy)]
@@ -220,7 +224,7 @@ impl SoundTouch {
     }
 
     /// Sets pitch change in octaves compared to the original pitch
-    /// (-1.00 .. +1.00).
+    /// `(-1.00 .. +1.00)`.
     pub fn set_pitch_octaves(&mut self, pitch_octaves: f64) -> &mut Self {
         unsafe {
             self.0.setPitchOctaves(pitch_octaves);
@@ -260,6 +264,7 @@ impl SoundTouch {
     ///
     /// [`put_samples`]: SoundTouch::put_samples
     /// [`receive_samples`]: SoundTouch::receive_samples
+    #[cfg(feature = "alloc")]
     pub fn generate_audio(&mut self, samples: &[f32]) -> Vec<f32> {
         const BUF_SIZE: usize = 6720;
         let mut new_samples: [f32; BUF_SIZE] = [0.0; BUF_SIZE];
@@ -285,13 +290,14 @@ impl SoundTouch {
         out_data
     }
 
+
     /// Adds `num_samples` pcs of samples from the `samples` memory position into
     /// the input of the object. Notice that sample rate **must** be set before
     /// calling this function, otherwise throws a runtime_error exception.
     ///
     /// Note: `num_samples` should contain the number of samples per channel.
-    /// Ex: If `samples.len()` is 6720 and there are 2 channels, then
-    /// `num_samples` should be 3360.
+    /// Ex: If `samples.len()` is `6720` and there are `2` channels, then
+    /// `num_samples` should be `3360`.
     pub fn put_samples(&mut self, samples: &[f32], num_samples: usize) {
         unsafe {
             ffi::SoundTouch_putSamples(
@@ -317,9 +323,6 @@ impl SoundTouch {
 
     /// Adjusts book-keeping so that given number of samples are removed from beginning of the
     /// sample buffer without copying them anywhere.
-    ///
-    /// Used to reduce the number of samples in the buffer when accessing the sample buffer directly
-    /// with `ptr_begin` function.
     pub fn receive_samples_no_in(&mut self, max_samples: usize) -> usize {
         unsafe {
             ffi::SoundTouch_receiveSamples1(
@@ -383,9 +386,9 @@ impl SoundTouch {
     /// exact.
     ///
     /// Example: if processing with parameters `-tempo=15 -pitch=-3`, the function
-    /// will return value 0.8695652... Now, if processing an audio stream whose duration
+    /// will return value `0.8695652..`. Now, if processing an audio stream whose duration
     /// is exactly one million audio samples, then you can expect the processed
-    /// output duration  be 0.869565 * 1000000 = 869565 samples.
+    /// output duration  be `0.869565 * 1000000 = 869565` samples.
     ///
     /// [`get_input_output_sample_ratio`]: SoundTouch::get_input_output_sample_ratio
     pub fn get_input_output_sample_ratio(&mut self) -> f64 {
@@ -401,7 +404,7 @@ impl SoundTouch {
     pub fn get_version_string() -> &'static str {
         unsafe {
             let ptr = ffi::SoundTouch_getVersionString();
-            let c_str = std::ffi::CStr::from_ptr(ptr);
+            let c_str = core::ffi::CStr::from_ptr(ptr);
             c_str.to_str().unwrap()
         }
     }

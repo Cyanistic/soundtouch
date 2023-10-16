@@ -53,8 +53,19 @@
 //!
 //!````
 //!Both examples should produce the same output.
+//!
+//!## Features
+//!This create is `no_std` but does provide the [`generate_audio`] utility function, which requires the `alloc` feature (enabled by default).
+//!
+//!To run in a completely `no_std` environment, disable the default features.
+//!
+//!- `alloc` (enabled by default): Enables the use of the [`generate_audio`] function.
+//!
+//![`generate_audio`]: SoundTouch::generate_audio
+
+#![no_std]
 
 mod bpm_detect;
-mod soundtouch;
-pub use soundtouch::*;
+mod sound_touch;
+pub use sound_touch::*;
 pub use bpm_detect::*;
