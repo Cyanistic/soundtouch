@@ -124,6 +124,7 @@ impl BPMDetect {
     }
 }
 
+#[cfg(not(windows))]
 impl Drop for BPMDetect {
     fn drop(&mut self) {
         unsafe { BPMDetect_BPMDetect_destructor(&mut self.0) }

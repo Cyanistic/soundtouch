@@ -423,6 +423,7 @@ impl SoundTouch {
     }
 }
 
+#[cfg(not(windows))]
 impl Drop for SoundTouch {
     fn drop(&mut self) {
         unsafe { ffi::SoundTouch_SoundTouch_destructor(&mut self.0) };
