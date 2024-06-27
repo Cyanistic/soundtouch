@@ -8,7 +8,7 @@ keywords = ["soundtouch", "audio", "music", "audio-processing", "audio-library"]
 name = "soundtouch"
 readme = "README.md"
 repository = "https://github.com/Cyanistic/soundtouch"
-version = "0.4.0"
+version = "0.4.1"
 
 [dependencies.soundtouch-ffi]
 version = "0.2.0"
