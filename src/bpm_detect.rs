@@ -102,6 +102,7 @@ impl BPMDetect {
 
     /// Calculates amplitude envelope for the buffer of samples.
     /// Result is output to `samples`.
+    #[cfg(not(all(target_env="gnu", target_os="windows")))]
     pub fn calc_envelope(&mut self, samples: &mut [f32]) {
         unsafe {
             self.0
