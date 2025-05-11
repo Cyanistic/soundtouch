@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/soundtouch.svg)](https://crates.io/crates/soundtouch)
 [![Documentation](https://docs.rs/soundtouch/badge.svg)](https://docs.rs/soundtouch)
 
-A safe utility wrapper around the SoundTouch C++ audio library. The API is very similar to the original C++ API.
+A safe utility wrapper around the SoundTouch C++ audio library. The API is very similar to the original C++ API. For dynamic and static linking configuration see [soundtouch-ffi's linking behavior](https://github.com/Cyanistic/soundtouch-ffi?tab=readme-ov-file#default-linking-behavior).
 
 Most of the documentation is copied from the [SoundTouch repository](https://codeberg.org/soundtouch/soundtouch).
 ## High Level Example

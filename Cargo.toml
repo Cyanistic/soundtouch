@@ -8,21 +8,17 @@ keywords = ["soundtouch", "audio", "music", "audio-processing", "audio-library"]
 name = "soundtouch"
 readme = "README.md"
 repository = "https://github.com/Cyanistic/soundtouch"
-version = "0.4.3"
+version = "0.5.0"
 
 [dependencies.soundtouch-ffi]
-version = "0.2.1"
+version = "0.3.0"
 
-[dependencies.libc]
-version = "0.2"
-default-features = false
-
-[dev-dependencies.anyhow]
-version = "1.0"
-
-[dev-dependencies.hound]
-version = "3.5"
+[dev-dependencies]
+anyhow = "1.0"
+hound = "3.5"
 
 [features]
 default = ["alloc"]
 alloc = []
+bundled = ["soundtouch-ffi/bundled"]
+dynamic = ["soundtouch-ffi/dynamic"]

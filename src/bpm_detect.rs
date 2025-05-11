@@ -1,7 +1,7 @@
 use core::ptr::null_mut;
 
 use ffi::{BPMDetect as BPMDetectSys, BPMDetect_BPMDetect_destructor};
-use libc::c_int;
+use core::ffi::c_int;
 use soundtouch_ffi as ffi;
 
 /// Beats-per-minute (BPM) detection routine.
