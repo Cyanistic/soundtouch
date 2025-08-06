@@ -218,7 +218,7 @@ impl SoundTouch {
     /// to the original rate (-50 .. +100 %).
     pub fn set_rate_change(&mut self, new_rate: f64) -> &mut Self {
         unsafe {
-            self.0.setTempoChange(new_rate);
+            self.0.setRateChange(new_rate);
         }
         self
     }
