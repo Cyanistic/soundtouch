@@ -1,6 +1,6 @@
+use core::ffi::{c_int, c_void};
 use ffi::{uint, SoundTouch as SoundTouchSys};
 use soundtouch_ffi as ffi;
-use core::ffi::{c_int, c_void};
 
 #[cfg(feature = "alloc")]
 use ffi::{SoundTouch_putSamples as putSamples, SoundTouch_receiveSamples as receiveSamples};
@@ -283,13 +283,14 @@ impl SoundTouch {
                     new_samples.as_mut_ptr(),
                     BUF_SIZE as u32 / self.0.channels,
                 );
-                out_data.extend_from_slice(&new_samples);
+                out_data.extend_from_slice(
+                    &new_samples[..(n_samples as usize * self.0.channels as usize)],
+                );
             }
             self.0.flush();
         }
         out_data
     }
-
 
     /// Adds `num_samples` pcs of samples from the `samples` memory position into
     /// the input of the object. Notice that sample rate **must** be set before
@@ -311,6 +312,9 @@ impl SoundTouch {
     /// Output samples from beginning of the sample buffer. Copies requested samples to
     /// output buffer and removes them from the sample buffer. If there are less than
     /// `max_samples` samples in the buffer, returns all that available.
+    ///
+    /// Note: Both `max_samples` and the return value represent samples *per channel*.
+    /// The actual number of floats written to `samples` is `return_value * channels`.
     pub fn receive_samples(&mut self, samples: &mut [f32], max_samples: usize) -> usize {
         unsafe {
             ffi::SoundTouch_receiveSamples(

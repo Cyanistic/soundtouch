@@ -5,16 +5,18 @@
 //!```rust
 //!use soundtouch::{SoundTouch, Setting};
 //!
+//!const CHANNELS: usize = 2;
+//!
 //!let mut soundtouch = SoundTouch::new();
 //!soundtouch
-//!    .set_channels(2)
+//!    .set_channels(CHANNELS as u32)
 //!    .set_sample_rate(44100)
 //!    .set_tempo(1.10)
 //!    // Recommended setting to speed up processing
 //!    .set_setting(Setting::UseQuickseek, 1);
 //!
 //!// use actual audio samples here
-//!let samples = vec![0.0; 44100 * 2];
+//!let samples = vec![0.0; 44100 * CHANNELS];
 //!let output_samples = soundtouch.generate_audio(&samples);
 //!
 //!// do something with output_samples
@@ -24,28 +26,30 @@
 //!```rust
 //!use soundtouch::{SoundTouch, Setting};
 //!
+//!const CHANNELS: usize = 2;
+//!
 //!let mut soundtouch = SoundTouch::new();
 //!soundtouch
-//!    .set_channels(2)
+//!    .set_channels(CHANNELS as u32)
 //!    .set_sample_rate(44100)
 //!    .set_tempo(1.10)    
 //!    // Recommended setting to speed up processing
 //!    .set_setting(Setting::UseQuickseek, 1);
 //!
 //!// use actual audio samples here
-//!let mut samples = vec![0.0; 44100 * 2];
+//!let mut samples = vec![0.0; 44100 * CHANNELS];
 //!
 //!const BUF_SIZE: usize = 6720;
 //!let mut new_samples: [f32; BUF_SIZE] = [0.0; BUF_SIZE];
 //!let mut output_samples: Vec<f32> = Vec::with_capacity(samples.len());
-//!soundtouch.put_samples(&samples, samples.len() / 2);
+//!soundtouch.put_samples(&samples, samples.len() / CHANNELS);
 //!let mut n_samples = 1;
 //!while n_samples != 0 {
 //!    n_samples = soundtouch.receive_samples(
 //!        new_samples.as_mut_slice(),
-//!        BUF_SIZE / 2
+//!        BUF_SIZE / CHANNELS
 //!        );
-//!    output_samples.extend_from_slice(&new_samples);
+//!    output_samples.extend_from_slice(&new_samples[..n_samples * CHANNELS]);
 //!}
 //!soundtouch.flush();
 //!
@@ -67,5 +71,5 @@
 
 mod bpm_detect;
 mod sound_touch;
-pub use sound_touch::*;
 pub use bpm_detect::*;
+pub use sound_touch::*;

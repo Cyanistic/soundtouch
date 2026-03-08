@@ -1,7 +1,7 @@
 use core::ptr::null_mut;
 
-use ffi::{BPMDetect as BPMDetectSys, BPMDetect_BPMDetect_destructor};
 use core::ffi::c_int;
+use ffi::{BPMDetect as BPMDetectSys, BPMDetect_BPMDetect_destructor};
 use soundtouch_ffi as ffi;
 
 /// Beats-per-minute (BPM) detection routine.
@@ -102,7 +102,7 @@ impl BPMDetect {
 
     /// Calculates amplitude envelope for the buffer of samples.
     /// Result is output to `samples`.
-    #[cfg(not(all(target_env="gnu", target_os="windows")))]
+    #[cfg(not(all(target_env = "gnu", target_os = "windows")))]
     pub fn calc_envelope(&mut self, samples: &mut [f32]) {
         unsafe {
             self.0
