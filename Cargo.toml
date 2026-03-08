@@ -11,7 +11,7 @@ repository = "https://github.com/Cyanistic/soundtouch"
 version = "0.5.2"
 
 [dependencies.soundtouch-ffi]
-version = "0.3.0"
+version = "0.4.0"
 
 [dev-dependencies]
 anyhow = "1.0"

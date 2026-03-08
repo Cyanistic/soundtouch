@@ -415,7 +415,7 @@ impl SoundTouch {
 
     /// Returns nonzero if there aren't any `ready` samples.
     pub fn is_empty(&mut self) -> i32 {
-        unsafe { ffi::FIFOSampleBuffer_isEmpty(&mut self.0 as *mut _ as *mut c_void) as i32 }
+        unsafe { ffi::soundtouch_isEmpty(&mut self.0) }
     }
 
     /// Get number of `ready` samples that can be received with
@@ -423,7 +423,7 @@ impl SoundTouch {
     ///
     /// [`receive_samples`]: SoundTouch::receive_samples
     pub fn num_samples(&mut self) -> i32 {
-        unsafe { ffi::FIFOSampleBuffer_numSamples(&mut self.0 as *mut _ as *mut c_void) as i32 }
+        unsafe { ffi::soundtouch_numSamples(&mut self.0) as i32 }
     }
 }
 
