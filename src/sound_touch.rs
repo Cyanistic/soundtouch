@@ -299,6 +299,13 @@ impl SoundTouch {
     /// Note: `num_samples` should contain the number of samples per channel.
     /// Ex: If `samples.len()` is `6720` and there are `2` channels, then
     /// `num_samples` should be `3360`.
+    ///
+    /// **Important**: SoundTouch operates as a FIFO pipeline. You should consume
+    /// output samples with [`receive_samples`] between calls to `put_samples`.
+    /// The internal buffer has limited capacity, and failing to consume output
+    /// may cause unexpected behavior.
+    ///
+    /// [`receive_samples`]: SoundTouch::receive_samples
     pub fn put_samples(&mut self, samples: &[f32], num_samples: usize) {
         unsafe {
             ffi::SoundTouch_putSamples(
@@ -353,11 +360,18 @@ impl SoundTouch {
 
     /// Flushes the last samples from the processing pipeline to the output.
     /// Clears also the internal processing buffers.
-    //
+    ///
     /// Note: This function is meant for extracting the last samples of a sound
     /// stream. This function may introduce additional blank samples in the end
     /// of the sound stream, and thus it's not recommended to call this function
     /// in the middle of a sound stream.
+    ///
+    /// **Warning**: Calling this function when there are no unprocessed samples
+    /// (i.e., [`num_unprocessed_samples`] returns 0) will still introduce blank
+    /// samples. Consider checking [`num_unprocessed_samples`] before calling if
+    /// you need to avoid this behavior.
+    ///
+    /// [`num_unprocessed_samples`]: SoundTouch::num_unprocessed_samples
     pub fn flush(&mut self) {
         unsafe {
             ffi::SoundTouch_flush(&mut self.0);
