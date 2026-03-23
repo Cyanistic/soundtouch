@@ -100,16 +100,6 @@ impl BPMDetect {
         unsafe { self.0.removeBias() }
     }
 
-    /// Calculates amplitude envelope for the buffer of samples.
-    /// Result is output to `samples`.
-    #[cfg(not(all(target_env = "gnu", target_os = "windows")))]
-    pub fn calc_envelope(&mut self, samples: &mut [f32]) {
-        unsafe {
-            self.0
-                .calcEnvelope(samples.as_mut_ptr(), samples.len() as c_int)
-        }
-    }
-
     /// Decimates samples to approx. 500 Hz.
     ///
     /// Returns the number of output samples.
